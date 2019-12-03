@@ -1,0 +1,29 @@
+
+int pink = 2;
+int cam_servo = 2;
+int main()
+{
+    camera_open();
+    enable_servos();
+  
+    int servo_pos = 1445;
+    set_servo_position(0,1445);
+  
+        while(1){
+          camera_update();
+            if(get_object_count(pink)>0){// see pink do this
+            int updated_pos = get_object_center_x (pink, 2) * 7.5;// converts to plane that both servo and camera understand
+            set_servo_position(3,updated_pos);
+            msleep(20);
+            printf("updated_pos = %d\n", updated_pos);
+            }
+            else
+            {
+               printf("No pink Detected\n"); // say this if camera see no pink
+            }
+        }
+    close_camera(); // when done shut camera off
+    disable_servos();
+    printf("program ended\n");
+    return 0;
+}
